@@ -2,8 +2,11 @@
   "name": "equation-frontend",
   "private": true,
   "dependencies": {
+    "@babel/core": "^7.6.0",
     "@babel/preset-react": "^7.0.0",
     "@rails/webpacker": "^4.0.7",
+    "antd": "^3.23.2",
+    "axios": "^0.19.0",
     "babel-plugin-transform-react-remove-prop-types": "^0.4.24",
     "prop-types": "^15.7.2",
     "react": "^16.9.0",

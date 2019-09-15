@@ -1,13 +1,11 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-
-const Hello = props => (
-  <div>Hello {props.name}!</div>
-)
+import App from '../components/App'
+import 'antd/dist/antd.css';
 
 document.addEventListener('DOMContentLoaded', () => {
   ReactDOM.render(
-    <Hello name="React" />,
+    <App />,
     document.body.appendChild(document.createElement('div')),
   )
 })
