@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { Form, InputNumber, Button } from 'antd'
-import { Typography } from 'antd';
+import { Typography, Alert } from 'antd';
 import axios from 'axios'
 
 const { Text } = Typography;
@@ -25,6 +25,10 @@ const LinearForm = (props) => {
 
         axios(options)
           .then((response) => {
+            if (response.status != 200){
+              setError("Something wrong...")
+            }
+
             if (response.data.root.length == 0){
               setError("no roots")
             } else {
@@ -42,6 +46,12 @@ const LinearForm = (props) => {
 
   return(
     <div>
+      <p>
+        <Text code>
+          Enter coefficients of equation:
+          ax + b = 0
+        </Text>
+      </p>
       <Form layout="inline" onSubmit={handleSubmit}>
         <Form.Item label="a:" required>
           {getFieldDecorator('a', {
@@ -62,18 +72,17 @@ const LinearForm = (props) => {
         </Form.Item>
       </Form>
       { error.length != 0 
-        ? <Text code>
-            {error}
-          </Text>
+        ? <Alert message={error} type="warning" />
         : root.map((root, index) => {
-          return(
-            <div>
-              <Text code copyable={{text: root}}>
-                x<sub>{index + 1}</sub> = {root}
-              </Text>
-              <br/>
-            </div>
-          )})
+            return(
+              <div>
+                <Text code copyable={{text: root}}>
+                  x<sub>{index + 1}</sub> = {root == "-Infinity..Infinity" ? root + " (It means you have endless set of solution)" :root}
+                </Text>
+                <br/>
+              </div>
+            )
+          })
       }
     </div>
   )

@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { Form, InputNumber, Button } from 'antd'
-import { Typography } from 'antd';
+import { Typography, Alert } from 'antd';
 import axios from 'axios'
 
 const { Text } = Typography;
@@ -25,6 +25,10 @@ const QuadraticForm = (props) => {
 
         axios(options)
           .then((response) => {
+            if (response.status != 200){
+              setError("Something wrong...")
+            }
+
             if (response.data.error ){
               setError(response.data.error)
             } else {
@@ -41,6 +45,12 @@ const QuadraticForm = (props) => {
 
   return(
     <div>
+      <p>
+        <Text code>
+          Enter coefficients of equation:
+          ax<sup>2</sup> + bx + c = 0
+        </Text>
+      </p>
       <Form layout="inline" onSubmit={handleSubmit}>
         <Form.Item label="a:" required>
           {getFieldDecorator('a', {
@@ -67,9 +77,7 @@ const QuadraticForm = (props) => {
         </Form.Item>
       </Form>
       { error.length != 0 
-        ? <Text code>
-            {error}
-          </Text>
+        ? <Alert message={error} type="warning" />
         : roots.map((root, index) => {
             return(
               <div>
