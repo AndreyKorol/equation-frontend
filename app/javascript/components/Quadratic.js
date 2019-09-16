@@ -1,9 +1,13 @@
 import React, { useState } from 'react'
 import { Form, InputNumber, Button } from 'antd'
+import { Typography } from 'antd';
 import axios from 'axios'
 
+const { Text } = Typography;
+
 const QuadraticForm = (props) => {
-  const [roots, setRoots] = useState([]);
+  const [roots, setRoots] = useState([])
+  const [error, setError] = useState("")
   const { getFieldDecorator } = props.form
 
   const handleSubmit = (e) => {
@@ -21,7 +25,12 @@ const QuadraticForm = (props) => {
 
         axios(options)
           .then((response) => {
-            setRoots(response.data.roots)
+            if (response.data.error ){
+              setError(response.data.error)
+            } else {
+              setRoots(response.data.roots)
+              setError("")
+            }
           })
           .catch((error) => {
             console.log(error)
@@ -57,7 +66,22 @@ const QuadraticForm = (props) => {
           </Button>
         </Form.Item>
       </Form>
-      {roots.map((root, index) => { return(<p>{index + 1} root: {root}</p>) })}
+      { error.length != 0 
+        ? <Text code>
+            {error}
+          </Text>
+        : roots.map((root, index) => {
+            return(
+              <div>
+                <Text code copyable={{text: root}}>
+                  x<sub>{index + 1}</sub> = {root}
+                </Text>
+                <br/>
+              </div>
+            )
+          })
+
+      }
     </div>
   )
 }
