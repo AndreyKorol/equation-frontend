@@ -4,7 +4,7 @@ import axios from 'axios'
 import Linear from './Linear'
 import Qudratic from './Quadratic'
 
-axios.defaults.baseURL = 'http://localhost:3001';
+axios.defaults.baseURL = 'https://solverapp.herokuapp.com/';
 
 const { Header, Content, Footer } = Layout;
 
